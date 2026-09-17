@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: event-attendance-postgres
+    environment:
+      POSTGRES_DB: event_attendance
+      POSTGRES_USER: event_user
+      POSTGRES_PASSWORD: event_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - event_attendance_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U event_user -d event_attendance"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: event-attendance-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  event_attendance_pgdata:

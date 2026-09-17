@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: event-attendance-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/event_attendance}
+    username: ${DB_USERNAME:event_user}
+    password: ${DB_PASSWORD:event_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_AUTH:false}
+          starttls:
+            enable: ${MAIL_STARTTLS:false}
+
+app:
+  mail:
+    from: ${MAIL_FROM:no-reply@event.local}
+    base-url: ${APP_BASE_URL:http://localhost:8080}
+
+  verification:
+    code-expiration-minutes: ${VERIFICATION_EXPIRATION_MINUTES:10}
+
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:admin123}
