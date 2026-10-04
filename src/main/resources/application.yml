@@ -6,7 +6,7 @@ spring:
     name: event-attendance-backend
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/event_attendance}
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/event_attendance}
     username: ${DB_USERNAME:event_user}
     password: ${DB_PASSWORD:event_password}
     driver-class-name: org.postgresql.Driver
@@ -37,7 +37,7 @@ app:
     base-url: ${APP_BASE_URL:http://localhost:8080}
 
   verification:
-    code-expiration-minutes: ${VERIFICATION_EXPIRATION_MINUTES:10}
+    code-expiration-minutes: ${VERIFICATION_EXPIRATION_MINUTES:2}
 
   admin:
     username: ${ADMIN_USERNAME:admin}

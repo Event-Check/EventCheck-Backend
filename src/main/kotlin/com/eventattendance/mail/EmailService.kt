@@ -28,7 +28,7 @@ class EmailService(
                 <p>Hello ${escape(name)},</p>
                 <p>Your verification code is:</p>
                 <h1 style="letter-spacing: 6px;">$code</h1>
-                <p>This code expires in 10 minutes.</p>
+e                <p>This code expires in 2 minutes.</p>
               </body>
             </html>
             """.trimIndent(),
