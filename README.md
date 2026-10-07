@@ -174,6 +174,50 @@ Example:
 curl -u admin:admin123 http://localhost:8080/api/v1/admin/stats
 ```
 
+## 8. Attendance report (PDF / Excel)
+
+Both endpoints require `admin / admin123`.
+
+### GET /api/v1/admin/report/summary
+
+Dashboard numbers as JSON:
+
+```json
+{
+  "registered": 500,
+  "verified": 470,
+  "checkedIn": 382,
+  "noShows": 118,
+  "attendanceRate": 81.3
+}
+```
+
+- `noShows` = registered - checkedIn
+- `attendanceRate` = checkedIn / verified x 100
+
+### GET /api/v1/admin/report/export
+
+| Param | Values | Default |
+|---|---|---|
+| `format` | `pdf`, `excel` (or `xlsx`) | required |
+| `includeAttendees` | `true`, `false` | `true` |
+
+The report contains the summary above plus (when `includeAttendees=true`) an attendee
+table with: name, email, verified, status (`Checked In` / `No Show`) and check-in time.
+Attendees are sorted by name. Excel output has a `Summary` sheet and an `Attendees` sheet.
+
+```bash
+curl -u admin:admin123 -OJ "http://localhost:8080/api/v1/admin/report/export?format=pdf"
+curl -u admin:admin123 -OJ "http://localhost:8080/api/v1/admin/report/export?format=excel"
+curl -u admin:admin123 -OJ "http://localhost:8080/api/v1/admin/report/export?format=pdf&includeAttendees=false"
+```
+
+Optional settings: `REPORT_EVENT_NAME` (title, default `Event`) and `REPORT_TIMEZONE`
+(check-in times, default `UTC`, e.g. `Africa/Cairo`).
+
+Note: the PDF uses the built-in Helvetica font, which does not render Arabic or other
+non-Latin names. Excel handles them fine.
+
 ## API summary
 
 | Method | Endpoint | Auth |
@@ -183,34 +227,6 @@ curl -u admin:admin123 http://localhost:8080/api/v1/admin/stats
 | POST | `/api/v1/registrations/resend-verification` | Public |
 | POST | `/api/v1/check-in` | Admin |
 | GET | `/api/v1/admin/stats` | Admin |
+| GET | `/api/v1/admin/report/summary` | Admin |
+| GET | `/api/v1/admin/report/export?format=pdf\|excel` | Admin |
 
-## Important production notes
-
-This project is ready for local functional testing. Before production:
-
-1. Change `ADMIN_USERNAME` and `ADMIN_PASSWORD`.
-2. Use HTTPS.
-3. Use a managed PostgreSQL database.
-4. Use a real transactional email provider instead of Mailpit.
-5. Move secrets to environment variables / secret manager.
-6. Consider JWT or another proper authentication mechanism for the organizer app.
-7. Add rate limiting for registration, verification, and resend endpoints.
-8. Add database migrations (Flyway/Liquibase) instead of relying on `ddl-auto: update`.
-9. Add an Event entity if the same backend will manage multiple events.
-10. Add audit logging if the client needs detailed attendance history.
-
-## Production email configuration
-
-The local configuration uses Mailpit:
-
-```yaml
-MAIL_HOST=localhost
-MAIL_PORT=1025
-MAIL_AUTH=false
-MAIL_STARTTLS=false
-MAIL_FROM=no-reply@event.local
-```
-
-For a real SMTP provider, set the environment variables to that provider's SMTP settings.
-
-Do not commit real SMTP passwords or production credentials to Git.
