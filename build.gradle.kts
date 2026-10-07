@@ -32,6 +32,9 @@ dependencies {
     implementation("com.google.zxing:core:3.5.3")
     implementation("com.google.zxing:javase:3.5.3")
 
+    implementation("org.apache.poi:poi-ooxml:5.4.1")
+    implementation("com.github.librepdf:openpdf:2.0.3")
+
     runtimeOnly("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
