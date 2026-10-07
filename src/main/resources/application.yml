@@ -1,4 +1,5 @@
 server:
+  address: 0.0.0.0
   port: 8080
 
 spring:
@@ -26,9 +27,9 @@ spring:
     password: ${MAIL_PASSWORD:}
     properties:
       mail:
-        smtp:
+        SMTP:
           auth: ${MAIL_AUTH:false}
-          starttls:
+          STARTTLS:
             enable: ${MAIL_STARTTLS:false}
 
 app:
@@ -38,6 +39,10 @@ app:
 
   verification:
     code-expiration-minutes: ${VERIFICATION_EXPIRATION_MINUTES:2}
+
+  report:
+    event-name: ${REPORT_EVENT_NAME:Event}
+    timezone: ${REPORT_TIMEZONE:Africa/Cairo}
 
   admin:
     username: ${ADMIN_USERNAME:admin}
