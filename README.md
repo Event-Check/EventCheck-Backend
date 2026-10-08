@@ -230,3 +230,15 @@ non-Latin names. Excel handles them fine.
 | GET | `/api/v1/admin/report/summary` | Admin |
 | GET | `/api/v1/admin/report/export?format=pdf\|excel` | Admin |
 
+
+## 📄 License
+
+EventCheck is proprietary software.
+
+The source code is publicly available for portfolio, educational, and
+evaluation purposes only. Copying, modifying, redistributing, or commercially
+using the source code is not permitted without prior written permission.
+
+See the [LICENSE](LICENSE) file for the full license terms.
+
+Copyright © 2026 Hend Sayed. All rights reserved.
